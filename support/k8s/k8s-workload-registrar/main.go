@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/spiffe/spire/pkg/common/log"
+	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/spiffe/spire/proto/spire/api/registration"
 	"github.com/zeebo/errs"
 	"google.golang.org/grpc"
@@ -36,7 +37,7 @@ func run(ctx context.Context, configPath string) error {
 	}
 	defer log.Close()
 
-	log.WithField("socket_path", config.ServerSocketPath).Info("Dialing server")
+	log.WithField(telemetry.SocketPath, config.ServerSocketPath).Info("Dialing server")
 	serverConn, err := grpc.DialContext(ctx, "unix://"+config.ServerSocketPath, grpc.WithInsecure())
 	if err != nil {
 		return errs.New("failed to dial server: %v", err)

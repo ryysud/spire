@@ -8,6 +8,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/spiffe/spire/pkg/common/cryptoutil"
+	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/spiffe/spire/pkg/common/version"
 	"github.com/spiffe/spire/pkg/server/endpoints/bundle/internal/autocert"
 	"github.com/spiffe/spire/pkg/server/plugin/keymanager"
@@ -135,7 +136,7 @@ func (ks *acmeKeyStore) NewPrivateKey(ctx context.Context, id string, keyType au
 		return nil, errs.Wrap(err)
 	}
 
-	ks.log.WithField("id", id).Info("Generated new key")
+	ks.log.WithField(telemetry.Kid, id).Info("Generated new key")
 	return ks.signer(keyID, resp.PublicKey)
 }
 

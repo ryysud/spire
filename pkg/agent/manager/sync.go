@@ -112,9 +112,9 @@ func (m *manager) fetchSVIDs(ctx context.Context, csrs []csrRequest) (_ *cache.U
 
 	privateKeys := make(map[string]*ecdsa.PrivateKey, len(csrs))
 	for _, csr := range csrs {
-		log := m.c.Log.WithField("spiffe_id", csr.SpiffeID)
+		log := m.c.Log.WithField(telemetry.SPIFFEID, csr.SpiffeID)
 		if !csr.CurrentSVIDExpiresAt.IsZero() {
-			log = log.WithField("expires_at", csr.CurrentSVIDExpiresAt.Format(time.RFC3339))
+			log = log.WithField(telemetry.Expiration, csr.CurrentSVIDExpiresAt.Format(time.RFC3339))
 		}
 
 		// Since entryIDs are unique, this shouldn't happen. Log just in case

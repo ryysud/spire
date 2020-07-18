@@ -10,6 +10,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/spiffe/spire/pkg/common/idutil"
+	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/spiffe/spire/proto/spire/api/registration"
 	"github.com/spiffe/spire/proto/spire/common"
 	"github.com/zeebo/errs"
@@ -166,7 +167,7 @@ func (c *Controller) deletePodEntry(ctx context.Context, namespace, name string)
 
 	log.Info("Deleting pod entries")
 	if len(entries.Entries) > 1 {
-		log.WithField("count", len(entries.Entries)).Warn("Multiple pod entries found to delete")
+		log.WithField(telemetry.Count, len(entries.Entries)).Warn("Multiple pod entries found to delete")
 	}
 
 	var errGroup errs.Group

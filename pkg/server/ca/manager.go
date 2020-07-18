@@ -388,7 +388,7 @@ func (m *Manager) PublishJWTKey(ctx context.Context, jwtKey *common.PublicKey) (
 			// appendBundle call below as if an upstream client was not
 			// configured so the JWT key gets pushed into the local bundle.
 			m.jwtUnimplementedWarnOnce.Do(func() {
-				m.c.Log.WithField("plugin_name", m.upstreamPluginName).Warn("UpstreamAuthority plugin does not support JWT-SVIDs. Workloads managed " +
+				m.c.Log.WithField(telemetry.PluginName, m.upstreamPluginName).Warn("UpstreamAuthority plugin does not support JWT-SVIDs. Workloads managed " +
 					"by this server may have trouble communicating with workloads outside " +
 					"this cluster when using JWT-SVIDs.")
 			})

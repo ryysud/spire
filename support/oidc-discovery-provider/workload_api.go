@@ -13,6 +13,7 @@ import (
 	workload_pb "github.com/spiffe/go-spiffe/proto/spiffe/workload"
 	"github.com/spiffe/go-spiffe/workload"
 	"github.com/spiffe/spire/pkg/common/idutil"
+	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/zeebo/errs"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
@@ -97,7 +98,7 @@ func (s *WorkloadAPISource) pollEvery(ctx context.Context, conn *grpc.ClientConn
 	client := workload_pb.NewSpiffeWorkloadAPIClient(conn)
 	ctx = metadata.NewOutgoingContext(ctx, metadata.Pairs("workload.spiffe.io", "true"))
 
-	s.log.WithField("interval", interval).Debug("Polling started")
+	s.log.WithField(telemetry.RetryInterval, interval).Debug("Polling started")
 	for {
 		s.pollOnce(ctx, client)
 		select {
@@ -135,7 +136,7 @@ func (s *WorkloadAPISource) pollOnce(ctx context.Context, client workload_pb.Spi
 
 func (s *WorkloadAPISource) parseBundle(bundle []byte) {
 	if bundle == nil {
-		s.log.WithField("trust_domain_id", s.trustDomainID).Error("No bundle for trust domain in Workload API response")
+		s.log.WithField(telemetry.TrustDomainID, s.trustDomainID).Error("No bundle for trust domain in Workload API response")
 		return
 	}
 

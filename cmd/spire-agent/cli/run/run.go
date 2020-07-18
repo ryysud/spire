@@ -158,7 +158,7 @@ func (cmd *Command) Run(args []string) int {
 	// Create uds dir and parents if not exists
 	dir := filepath.Dir(c.BindAddress.String())
 	if _, statErr := os.Stat(dir); os.IsNotExist(statErr) {
-		c.Log.WithField("dir", dir).Infof("Creating spire agent UDS directory")
+		c.Log.WithField(telemetry.Path, dir).Infof("Creating spire agent UDS directory")
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			fmt.Fprintln(cmd.env.Stderr, err)
 			return 1

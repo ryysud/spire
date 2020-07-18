@@ -9,6 +9,7 @@ import (
 	"github.com/andres-erbsen/clock"
 	"github.com/gogo/protobuf/proto"
 	"github.com/sirupsen/logrus"
+	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/spiffe/spire/proto/spire/api/registration"
 	"github.com/spiffe/spire/proto/spire/common"
 	"github.com/zeebo/errs"
@@ -85,7 +86,7 @@ func (s *RegistrationAPISource) pollEvery(ctx context.Context, conn *grpc.Client
 	defer conn.Close()
 	client := registration.NewRegistrationClient(conn)
 
-	s.log.WithField("interval", interval).Debug("Polling started")
+	s.log.WithField(telemetry.RetryInterval, interval).Debug("Polling started")
 	for {
 		s.pollOnce(ctx, client)
 		select {
@@ -129,7 +130,7 @@ func (s *RegistrationAPISource) parseBundle(bundle *common.Bundle) {
 	for _, key := range bundle.JwtSigningKeys {
 		publicKey, err := x509.ParsePKIXPublicKey(key.PkixBytes)
 		if err != nil {
-			s.log.WithError(err).WithField("kid", key.Kid).Warn("Malformed public key in bundle")
+			s.log.WithError(err).WithField(telemetry.Kid, key.Kid).Warn("Malformed public key in bundle")
 			continue
 		}
 

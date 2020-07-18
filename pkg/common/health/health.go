@@ -77,7 +77,7 @@ func (c *Checker) ListenAndServe(ctx context.Context) error {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			c.log.WithField("address", c.server.Addr).Info("Serving health checks")
+			c.log.WithField(telemetry.Address, c.server.Addr).Info("Serving health checks")
 			if err := c.server.ListenAndServe(); err != http.ErrServerClosed {
 				c.log.WithError(err).Warn("Error serving health checks")
 			}

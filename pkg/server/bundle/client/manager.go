@@ -7,6 +7,7 @@ import (
 	"github.com/andres-erbsen/clock"
 	"github.com/sirupsen/logrus"
 	"github.com/spiffe/spire/pkg/common/bundleutil"
+	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/spiffe/spire/pkg/common/util"
 	"github.com/spiffe/spire/pkg/server/plugin/datastore"
 )
@@ -87,7 +88,7 @@ func (m *Manager) Run(ctx context.Context) error {
 }
 
 func (m *Manager) runUpdater(ctx context.Context, trustDomain string, updater BundleUpdater) error {
-	log := m.log.WithField("trust_domain", trustDomain)
+	log := m.log.WithField(telemetry.TrustDomainID, trustDomain)
 	for {
 		var nextRefresh time.Duration
 		log.Debug("Polling for bundle update")

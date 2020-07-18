@@ -262,6 +262,9 @@ const (
 	// Slot X509 CA Slot ID
 	Slot = "slot"
 
+	// Socket tags a Unix Domain Socket path
+	SocketPath = "socket_path"
+
 	// SPIFFEID tags a SPIFFE ID
 	SPIFFEID = "spiffe_id"
 
@@ -553,6 +556,9 @@ const (
 
 	// UpdateRegistrationEntry functionality related to updating a registration entry
 	UpdateRegistrationEntry = "update_registration_entry"
+
+	// URL tags some URL
+	URL = "url"
 
 	// ValidateJWTSVID functionality related validating a JWT-SVID
 	ValidateJWTSVID = "validate_jwt_svid"

@@ -9,6 +9,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/spiffe/spire/pkg/common/log"
+	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/zeebo/errs"
 	"golang.org/x/crypto/acme"
 	"golang.org/x/crypto/acme/autocert"
@@ -76,13 +77,13 @@ func run(configPath string) error {
 		if err != nil {
 			return err
 		}
-		log.WithField("address", config.InsecureAddr).Warn("Serving HTTP (insecure)")
+		log.WithField(telemetry.Address, config.InsecureAddr).Warn("Serving HTTP (insecure)")
 	case config.ListenSocketPath != "":
 		listener, err = net.Listen("unix", config.ListenSocketPath)
 		if err != nil {
 			return err
 		}
-		log.WithField("socket", config.ListenSocketPath).Info("Serving HTTP (unix)")
+		log.WithField(telemetry.SocketPath, config.ListenSocketPath).Info("Serving HTTP (unix)")
 	default:
 		listener = acmeListener(log, config)
 		log.Info("Serving HTTPS via ACME")
@@ -106,7 +107,7 @@ func acmeListener(logger *log.Logger, config *Config) net.Listener {
 		Email:      config.ACME.Email,
 		HostPolicy: autocert.HostWhitelist(config.Domain),
 		Prompt: func(tosURL string) bool {
-			logger.WithField("url", tosURL).Info("ACME Terms Of Service accepted")
+			logger.WithField(telemetry.URL, tosURL).Info("ACME Terms Of Service accepted")
 			return true
 		},
 	}
