@@ -603,6 +603,7 @@ func (s *PluginSuite) TestCreateAttestedNode() {
 		AttestationDataType: "aws-tag",
 		CertSerialNumber:    "badcafe",
 		CertNotAfter:        time.Now().Add(time.Hour).Unix(),
+		Version:             "1.0.0",
 	}
 
 	attestedNode, err := s.ds.CreateAttestedNode(ctx, node)
@@ -640,6 +641,7 @@ func (s *PluginSuite) TestListAttestedNodes() {
 			CertSerialNumber:    sn,
 			CertNotAfter:        notAfter.Unix(),
 			Selectors:           makeSelectors(selectors...),
+			Version:             "1.0.0",
 		}
 	}
 
@@ -2566,6 +2568,8 @@ func (s *PluginSuite) TestMigration() {
 			s.Require().True(db.Dialect().HasIndex("attested_node_entries", "idx_attested_node_entries_expires_at"))
 		case 15:
 			s.Require().True(s.ds.db.Dialect().HasColumn("registered_entries", "store_svid"))
+		case 16:
+			s.Require().True(s.ds.db.Dialect().HasColumn("attested_node_entries", "version"))
 		default:
 			s.T().Fatalf("no migration test added for version %d", i)
 		}

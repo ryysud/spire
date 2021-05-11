@@ -314,6 +314,7 @@ func (s *Service) AttestAgent(stream agentv1.Agent_AttestAgentServer) error {
 			SpiffeId:            agentID,
 			CertNotAfter:        svid[0].NotAfter.Unix(),
 			CertSerialNumber:    svid[0].SerialNumber.String(),
+			Version:             req.GetVersion(),
 		}
 		if _, err := s.ds.CreateAttestedNode(ctx, node); err != nil {
 			return api.MakeErr(log, codes.Internal, "failed to create attested agent", err)

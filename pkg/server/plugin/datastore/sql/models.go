@@ -34,23 +34,12 @@ type AttestedNode struct {
 	NewExpiresAt    *time.Time
 
 	Selectors []*NodeSelector
+
+	Version string
 }
 
 // TableName gets table name of AttestedNode
 func (AttestedNode) TableName() string {
-	return "attested_node_entries"
-}
-
-type V3AttestedNode struct {
-	Model
-
-	SpiffeID     string `gorm:"unique_index"`
-	DataType     string
-	SerialNumber string
-	ExpiresAt    time.Time
-}
-
-func (V3AttestedNode) TableName() string {
 	return "attested_node_entries"
 }
 

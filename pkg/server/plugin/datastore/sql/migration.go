@@ -19,7 +19,7 @@ import (
 
 const (
 	// the latest schema version of the database in the code
-	latestSchemaVersion = 16
+	latestSchemaVersion = 17
 )
 
 var (
@@ -250,6 +250,7 @@ func migrateVersion(tx *gorm.DB, currVersion int, log logrus.FieldLogger) (versi
 		migrateToV14,
 		migrateToV15,
 		migrateToV16,
+		migrateToV17,
 	}
 
 	if currVersion >= len(migrations) {
@@ -492,7 +493,14 @@ func migrateToV15(tx *gorm.DB) error {
 }
 
 func migrateToV16(tx *gorm.DB) error {
-	if err := tx.AutoMigrate(&RegisteredEntry{}).Error; err != nil {
+	if err := tx.AutoMigrate(&RegisteredEntry{}, V16AttestedNode{}).Error; err != nil {
+		return sqlError.Wrap(err)
+	}
+	return nil
+}
+
+func migrateToV17(tx *gorm.DB) error {
+	if err := tx.AutoMigrate(&AttestedNode{}).Error; err != nil {
 		return sqlError.Wrap(err)
 	}
 	return nil
@@ -552,6 +560,40 @@ type V3CACert struct {
 // TableName gets table name for v3 bundle
 func (V3CACert) TableName() string {
 	return "ca_certs"
+}
+
+// V3AttestedNode holds an attested node (agent)
+type V3AttestedNode struct {
+	Model
+
+	SpiffeID     string `gorm:"unique_index"`
+	DataType     string
+	SerialNumber string
+	ExpiresAt    time.Time
+}
+
+// TableName gets table name of V3AttestedNode
+func (V3AttestedNode) TableName() string {
+	return "attested_node_entries"
+}
+
+// V16AttestedNode holds an attested node (agent)
+type V16AttestedNode struct {
+	Model
+
+	SpiffeID        string `gorm:"unique_index"`
+	DataType        string
+	SerialNumber    string
+	ExpiresAt       time.Time `gorm:"index"`
+	NewSerialNumber string
+	NewExpiresAt    *time.Time
+
+	Selectors []*NodeSelector
+}
+
+// TableName gets table name of V16AttestedNode
+func (V16AttestedNode) TableName() string {
+	return "attested_node_entries"
 }
 
 // V4RegisteredEntry holds a version 4 registered entry

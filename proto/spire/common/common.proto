@@ -51,6 +51,9 @@ message AttestedNode {
 
     // Node selectors
     repeated Selector selectors = 7;
+
+    // Agent version
+    string version = 8;
 }
 
 /** This is a curated record that the Server uses to set up and

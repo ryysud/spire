@@ -964,6 +964,7 @@ func createAttestedNode(tx *gorm.DB, node *common.AttestedNode) (*common.Atteste
 		ExpiresAt:       time.Unix(node.CertNotAfter, 0),
 		NewSerialNumber: node.NewCertSerialNumber,
 		NewExpiresAt:    nullableUnixTimeToDBTime(node.NewCertNotAfter),
+		Version:         node.Version,
 	}
 
 	if err := tx.Create(&model).Error; err != nil {
@@ -1212,7 +1213,7 @@ func buildListAttestedNodesQueryCTE(req *datastore.ListAttestedNodesRequest, dbT
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
@@ -1221,7 +1222,7 @@ func buildListAttestedNodesQueryCTE(req *datastore.ListAttestedNodesRequest, dbT
 
 	// Add expected fields
 	builder.WriteString(`
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1234,12 +1235,14 @@ SELECT
 	if fetchSelectors {
 		builder.WriteString(`
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  `)
 	} else {
 		builder.WriteString(`
 	NULL AS selector_type,
-	NULL AS selector_value`)
+	NULL AS selector_value,
+	version`)
 	}
 
 	// Choose what table will be used
@@ -1354,7 +1357,7 @@ func buildListAttestedNodesQueryMySQL(req *datastore.ListAttestedNodesRequest) (
 
 	// Add expected fields
 	builder.WriteString(`
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1367,9 +1370,10 @@ SELECT
 	if fetchSelectors {
 		builder.WriteString(`
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1377,7 +1381,8 @@ ON
 	} else {
 		builder.WriteString(`
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 `)
 	}
@@ -2784,6 +2789,7 @@ type nodeRow struct {
 	NewExpiresAt    sql.NullTime
 	SelectorType    sql.NullString
 	SelectorValue   sql.NullString
+	Version         sql.NullString
 }
 
 func scanNodeRow(rs *sql.Rows, r *nodeRow) error {
@@ -2797,6 +2803,7 @@ func scanNodeRow(rs *sql.Rows, r *nodeRow) error {
 		&r.NewExpiresAt,
 		&r.SelectorType,
 		&r.SelectorValue,
+		&r.Version,
 	))
 }
 
@@ -2833,6 +2840,10 @@ func fillNodeFromRow(node *common.AttestedNode, r *nodeRow) error {
 			Type:  r.SelectorType.String,
 			Value: r.SelectorValue.String,
 		})
+	}
+
+	if r.Version.Valid {
+		node.Version = r.Version.String
 	}
 
 	return nil
@@ -3295,6 +3306,7 @@ func modelToAttestedNode(model AttestedNode) *common.AttestedNode {
 		CertNotAfter:        model.ExpiresAt.Unix(),
 		NewCertSerialNumber: model.NewSerialNumber,
 		NewCertNotAfter:     nullableDBTimeToUnixTime(model.NewExpiresAt),
+		Version:             model.Version,
 	}
 }
 

@@ -575,6 +575,10 @@ github.com/russross/blackfriday v1.5.2/go.mod h1:JO/DiYxRf+HjHt06OyowR9PTA263kcR
 github.com/ryanuber/columnize v2.1.0+incompatible/go.mod h1:sm1tb6uqfes/u+d4ooFouqFdy9/2g9QGwK3SQygK0Ts=
 github.com/ryanuber/go-glob v1.0.0 h1:iQh3xXAumdQ+4Ufa5b25cRpC5TYKlno6hsv6Cb3pkBk=
 github.com/ryanuber/go-glob v1.0.0/go.mod h1:807d1WSdnB0XRJzKNil9Om6lcp/3a0v4qIHxIXzX/Yc=
+github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210318220945-7ff3eb0759ce h1:EuSM4BzWDBm4Awzm8KjoCne5Sa2Y7b22b1VF+lEcIlQ=
+github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210318220945-7ff3eb0759ce/go.mod h1:2wSTZ6oEnKqI3uBST05Mmm751+yoHEvgxomYKYOQ6Ko=
+github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210511082525-64e623017410 h1:nneWVUZDGv2WeIUEVin43J/dd7IH8sGUm0qYAqrX5uw=
+github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210511082525-64e623017410/go.mod h1:2wSTZ6oEnKqI3uBST05Mmm751+yoHEvgxomYKYOQ6Ko=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
 github.com/shirou/gopsutil v2.18.12+incompatible h1:1eaJvGomDnH74/5cF4CTmTbLHAriGFsTZppLXDX93OM=
 github.com/shirou/gopsutil v2.18.12+incompatible/go.mod h1:5b4v6he4MtMOwMlS0TUMTu2PcXUg8+E1lC7eC3UO/RA=

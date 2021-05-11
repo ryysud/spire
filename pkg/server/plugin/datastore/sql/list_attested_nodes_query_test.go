@@ -61,7 +61,7 @@ func TestListAttestedNodesQuery(t *testing.T) {
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -70,7 +70,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -84,7 +85,7 @@ WHERE id IN (
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -93,7 +94,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -107,7 +109,7 @@ WHERE id IN (
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND id > ?)
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -116,7 +118,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -131,7 +134,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND expires_at < ?
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -140,7 +143,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -159,12 +163,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -173,7 +177,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -194,12 +199,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -208,7 +213,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -231,12 +237,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -245,7 +251,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -266,12 +273,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -280,7 +287,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -299,7 +307,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND data_type = ?
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -308,7 +316,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -323,7 +332,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND serial_number = ''
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -332,7 +341,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -347,7 +357,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND serial_number <> ''
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -356,7 +366,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -375,12 +386,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -389,7 +400,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -410,12 +422,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -424,7 +436,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -445,12 +458,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -459,7 +472,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -480,12 +494,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -494,7 +508,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -518,12 +533,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -532,7 +547,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -552,7 +568,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND data_type = ?
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -561,7 +577,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -577,7 +594,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND id > ?		AND data_type = ?
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -586,7 +603,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -609,12 +627,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -623,7 +641,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -650,12 +669,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -664,7 +683,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -681,7 +701,7 @@ WHERE id IN (
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -690,7 +710,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -704,7 +725,7 @@ WHERE id IN (
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -713,7 +734,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -727,7 +749,7 @@ WHERE id IN (
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND id > $1)
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -736,7 +758,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -751,7 +774,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND expires_at < $1
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -760,7 +783,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -779,12 +803,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -793,7 +817,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -814,12 +839,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -828,7 +853,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -851,12 +877,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -865,7 +891,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -886,12 +913,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -900,7 +927,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -919,7 +947,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND data_type = $1
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -928,7 +956,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -943,7 +972,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND serial_number = ''
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -952,7 +981,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -967,7 +997,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND serial_number <> ''
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -976,7 +1006,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -995,12 +1026,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1009,7 +1040,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1030,12 +1062,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1044,7 +1076,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1065,12 +1098,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1079,7 +1112,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1100,12 +1134,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1114,7 +1148,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1138,12 +1173,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1152,7 +1187,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1172,7 +1208,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND data_type = $1
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1181,7 +1217,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -1197,7 +1234,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND id > $1		AND data_type = $2
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1206,7 +1243,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -1229,12 +1267,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1243,7 +1281,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1270,12 +1309,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1284,7 +1323,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1298,7 +1338,7 @@ WHERE id IN (
 		{
 			dialect: "mysql",
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1307,7 +1347,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true
 `},
@@ -1315,7 +1356,7 @@ WHERE true
 			dialect: "mysql",
 			paged:   withNoToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1324,7 +1365,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true ORDER BY N.id ASC LIMIT 1
 `},
@@ -1332,7 +1374,7 @@ WHERE true ORDER BY N.id ASC LIMIT 1
 			dialect: "mysql",
 			paged:   withToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1341,7 +1383,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true AND N.id > ? ORDER BY N.id ASC LIMIT 1
 `},
@@ -1349,7 +1392,7 @@ WHERE true AND N.id > ? ORDER BY N.id ASC LIMIT 1
 			dialect: "mysql",
 			by:      []filterBy{byExpiresBefore},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1358,7 +1401,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true AND N.expires_at < ?
 `},
@@ -1366,7 +1410,7 @@ WHERE true AND N.expires_at < ?
 			dialect: "mysql",
 			by:      []filterBy{bySelectorSubsetOne},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1375,9 +1419,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1395,7 +1440,7 @@ WHERE N.id IN (
 			dialect: "mysql",
 			by:      []filterBy{bySelectorSubsetMany},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1404,9 +1449,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1426,7 +1472,7 @@ WHERE N.id IN (
 			dialect: "mysql",
 			by:      []filterBy{bySelectorExactOne},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1435,9 +1481,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1454,7 +1501,7 @@ WHERE N.id IN (
 			dialect: "mysql",
 			by:      []filterBy{bySelectorExactMany},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1463,9 +1510,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1485,7 +1533,7 @@ WHERE N.id IN (
 			dialect: "mysql",
 			by:      []filterBy{byAttestationType},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1494,7 +1542,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true AND N.data_type = ?
 `},
@@ -1502,7 +1551,7 @@ WHERE true AND N.data_type = ?
 			dialect: "mysql",
 			by:      []filterBy{byBanned},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1511,7 +1560,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true AND N.serial_number = ''
 `},
@@ -1519,7 +1569,7 @@ WHERE true AND N.serial_number = ''
 			dialect: "mysql",
 			by:      []filterBy{byNoBanned},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1528,7 +1578,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true AND N.serial_number <> ''
 `},
@@ -1536,7 +1587,7 @@ WHERE true AND N.serial_number <> ''
 			dialect: "mysql",
 			by:      []filterBy{byFetchSelectors},
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1545,9 +1596,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1562,7 +1614,7 @@ WHERE N.id IN (
 			by:      []filterBy{byFetchSelectors},
 			paged:   withNoToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1571,9 +1623,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1590,7 +1643,7 @@ WHERE N.id IN (
 			by:      []filterBy{byFetchSelectors},
 			paged:   withToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1599,9 +1652,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1618,7 +1672,7 @@ WHERE N.id IN (
 			by:      []filterBy{bySelectorExactMany},
 			paged:   withNoToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1627,9 +1681,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1652,7 +1707,7 @@ WHERE N.id IN (
 			by:      []filterBy{bySelectorExactMany},
 			paged:   withToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1661,9 +1716,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1686,7 +1742,7 @@ WHERE N.id IN (
 			by:      []filterBy{byAttestationType},
 			paged:   withNoToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1695,7 +1751,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true AND N.data_type = ? ORDER BY N.id ASC LIMIT 1
 `},
@@ -1704,7 +1761,7 @@ WHERE true AND N.data_type = ? ORDER BY N.id ASC LIMIT 1
 			by:      []filterBy{byAttestationType},
 			paged:   withToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1713,7 +1770,8 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	N.version
 FROM attested_node_entries N
 WHERE true AND N.id > ? AND N.data_type = ? ORDER BY N.id ASC LIMIT 1
 `},
@@ -1722,7 +1780,7 @@ WHERE true AND N.id > ? AND N.data_type = ? ORDER BY N.id ASC LIMIT 1
 			by:      []filterBy{byAttestationType, byBanned, bySelectorExactMany, byExpiresBefore},
 			paged:   withToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1731,9 +1789,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1756,7 +1815,7 @@ WHERE N.id IN (
 			by:      []filterBy{byAttestationType, byBanned, bySelectorExactMany, byExpiresBefore},
 			paged:   withNoToken,
 			query: `
-SELECT 
+SELECT
 	N.id AS e_id,
 	N.spiffe_id,
 	N.data_type,
@@ -1765,9 +1824,10 @@ SELECT
 	N.new_serial_number,
 	N.new_expires_at,
 	S.type AS selector_type,
-	S.value AS selector_value 
+	S.value AS selector_value,
+	N.version
 FROM attested_node_entries N
-LEFT JOIN 
+LEFT JOIN
 	node_resolver_map_entries S
 ON
 	N.spiffe_id = S.spiffe_id
@@ -1792,7 +1852,7 @@ WHERE N.id IN (
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1801,7 +1861,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -1816,7 +1877,7 @@ WHERE id IN (
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1825,7 +1886,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 	SELECT id FROM (
@@ -1842,7 +1904,7 @@ WHERE id IN (
 WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND id > ?)
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1851,7 +1913,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 	SELECT id FROM (
@@ -1869,7 +1932,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND expires_at < ?
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1878,7 +1941,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -1898,12 +1962,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1912,7 +1976,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1934,12 +1999,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1948,7 +2013,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -1972,12 +2038,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -1986,7 +2052,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -2008,12 +2075,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2022,7 +2089,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -2044,7 +2112,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND data_type = ?
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2053,7 +2121,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -2069,7 +2138,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND serial_number = ''
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2078,7 +2147,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -2094,7 +2164,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND serial_number <> ''
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2103,7 +2173,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 		SELECT id 
@@ -2123,12 +2194,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2137,7 +2208,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -2159,12 +2231,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2173,7 +2245,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -2197,12 +2270,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2211,7 +2284,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -2235,12 +2309,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2249,7 +2323,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -2277,12 +2352,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2291,7 +2366,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -2316,7 +2392,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND data_type = ?
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2325,7 +2401,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 	SELECT id FROM (
@@ -2344,7 +2421,7 @@ WITH filtered_nodes AS (
 	SELECT * FROM attested_node_entries WHERE true
 		AND id > ?		AND data_type = ?
 )
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2353,7 +2430,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	NULL AS selector_type,
-	NULL AS selector_value
+	NULL AS selector_value,
+	version
 FROM filtered_nodes
 WHERE id IN (
 	SELECT id FROM (
@@ -2379,12 +2457,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2393,7 +2471,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
@@ -2425,12 +2504,12 @@ WITH filtered_nodes AS (
 	    FROM
 			filtered_nodes
 	    LEFT JOIN
-	 	    node_resolver_map_entries nr       
+	 	    node_resolver_map_entries nr
 	    ON
 	        nr.spiffe_id=filtered_nodes.spiffe_id
 	)
 
-SELECT 
+SELECT
 	id AS e_id,
 	spiffe_id,
 	data_type,
@@ -2439,7 +2518,8 @@ SELECT
 	new_serial_number,
 	new_expires_at,
 	selector_type,
-	selector_value 
+	selector_value,
+	version
 	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (

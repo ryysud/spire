@@ -12,6 +12,7 @@ import (
 	"github.com/spiffe/spire-api-sdk/proto/spire/api/types"
 	"github.com/spiffe/spire/pkg/agent/plugin/nodeattestor"
 	"github.com/spiffe/spire/pkg/common/bundleutil"
+	"github.com/spiffe/spire/pkg/common/version"
 	"github.com/spiffe/spire/pkg/common/x509util"
 	"google.golang.org/grpc"
 )
@@ -76,6 +77,7 @@ type serverStream struct {
 
 func (ss *serverStream) SendAttestationData(ctx context.Context, attestationData nodeattestor.AttestationData) ([]byte, error) {
 	return ss.sendRequest(ctx, &agentv1.AttestAgentRequest{
+		Version: version.Base,
 		Step: &agentv1.AttestAgentRequest_Params_{
 			Params: &agentv1.AttestAgentRequest_Params{
 				Data: &types.AttestationData{
