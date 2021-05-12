@@ -16,6 +16,7 @@ func TestAllTrueMasks(t *testing.T) {
 		X509SvidExpiresAt:    true,
 		Selectors:            true,
 		Banned:               true,
+		Version:              true,
 	}, protoutil.AllTrueAgentMask)
 
 	assert.Equal(t, &types.BundleMask{

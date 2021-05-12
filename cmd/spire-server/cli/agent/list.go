@@ -78,6 +78,9 @@ func printAgents(env *common_cli.Env, agents ...*types.Agent) error {
 		if err := env.Printf("Serial number     : %s\n", agent.X509SvidSerialNumber); err != nil {
 			return err
 		}
+		if err := env.Printf("Version           : %s\n", agent.Version); err != nil {
+			return err
+		}
 		if err := env.Println(); err != nil {
 			return err
 		}

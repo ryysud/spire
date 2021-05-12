@@ -1235,15 +1235,15 @@ SELECT
 	if fetchSelectors {
 		builder.WriteString(`
 	selector_type,
-	selector_value,
-	version
-	  `)
+	selector_value,`)
 	} else {
 		builder.WriteString(`
 	NULL AS selector_type,
-	NULL AS selector_value,
-	version`)
+	NULL AS selector_value,`)
 	}
+
+	builder.WriteString(`
+	version`)
 
 	// Choose what table will be used
 	fromQuery := "FROM filtered_nodes"

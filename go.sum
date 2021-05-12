@@ -579,6 +579,8 @@ github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210318220945-7ff3eb0759ce h1:EuSM
 github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210318220945-7ff3eb0759ce/go.mod h1:2wSTZ6oEnKqI3uBST05Mmm751+yoHEvgxomYKYOQ6Ko=
 github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210511082525-64e623017410 h1:nneWVUZDGv2WeIUEVin43J/dd7IH8sGUm0qYAqrX5uw=
 github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210511082525-64e623017410/go.mod h1:2wSTZ6oEnKqI3uBST05Mmm751+yoHEvgxomYKYOQ6Ko=
+github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210512024438-7789667ffc25 h1:Cwl9+0gyYLqiRZVytYpPHsQ73l7QWy8S0TPmps+obQY=
+github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210512024438-7789667ffc25/go.mod h1:2wSTZ6oEnKqI3uBST05Mmm751+yoHEvgxomYKYOQ6Ko=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
 github.com/shirou/gopsutil v2.18.12+incompatible h1:1eaJvGomDnH74/5cF4CTmTbLHAriGFsTZppLXDX93OM=
 github.com/shirou/gopsutil v2.18.12+incompatible/go.mod h1:5b4v6he4MtMOwMlS0TUMTu2PcXUg8+E1lC7eC3UO/RA=

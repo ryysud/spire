@@ -591,6 +591,10 @@ func applyMask(a *types.Agent, mask *types.AgentMask) {
 	if !mask.Banned {
 		a.Banned = false
 	}
+
+	if !mask.Version {
+		a.Version = ""
+	}
 }
 
 func validateAttestAgentParams(params *agentv1.AttestAgentRequest_Params) error {

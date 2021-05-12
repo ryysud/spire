@@ -179,7 +179,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -215,7 +214,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -253,7 +251,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -289,7 +286,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -402,7 +398,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 		SELECT DISTINCT id 
@@ -438,7 +433,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 		SELECT DISTINCT id 
@@ -474,7 +468,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 		SELECT DISTINCT id 
@@ -510,7 +503,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -549,7 +541,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -643,7 +634,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -685,7 +675,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -819,7 +808,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -855,7 +843,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -893,7 +880,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -929,7 +915,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -1042,7 +1027,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 		SELECT DISTINCT id 
@@ -1078,7 +1062,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 		SELECT DISTINCT id 
@@ -1114,7 +1097,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 		SELECT DISTINCT id 
@@ -1150,7 +1132,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -1189,7 +1170,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -1283,7 +1263,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -1325,7 +1304,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -1978,7 +1956,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -2015,7 +1992,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -2054,7 +2030,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -2091,7 +2066,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT DISTINCT id FROM (
@@ -2210,7 +2184,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 		SELECT DISTINCT id 
@@ -2247,7 +2220,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT id FROM (
@@ -2286,7 +2258,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT id FROM (
@@ -2325,7 +2296,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT id FROM (
@@ -2368,7 +2338,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT id FROM (
@@ -2473,7 +2442,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT id FROM (
@@ -2520,7 +2488,6 @@ SELECT
 	selector_type,
 	selector_value,
 	version
-	  
 FROM filtered_nodes_and_selectors
 WHERE id IN (
 	SELECT id FROM (
