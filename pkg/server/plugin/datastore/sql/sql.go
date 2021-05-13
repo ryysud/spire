@@ -16,6 +16,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
 
+	agentv1 "github.com/spiffe/spire-api-sdk/proto/spire/api/server/agent/v1"
 	"github.com/spiffe/spire/pkg/common/bundleutil"
 	"github.com/spiffe/spire/pkg/common/idutil"
 	"github.com/spiffe/spire/pkg/common/protoutil"
@@ -226,15 +227,15 @@ func (ds *Plugin) FetchAttestedNode(ctx context.Context, spiffeID string) (attes
 }
 
 // CountAttestedNodes counts all attested nodes
-func (ds *Plugin) CountAttestedNodes(ctx context.Context) (count int32, err error) {
+func (ds *Plugin) CountAttestedNodes(ctx context.Context) (resp *agentv1.CountAgentsResponse, err error) {
 	if err = ds.withReadTx(ctx, func(tx *gorm.DB) (err error) {
-		count, err = countAttestedNodes(tx)
+		resp, err = countAttestedNodes(tx)
 		return err
 	}); err != nil {
-		return 0, err
+		return nil, err
 	}
 
-	return count, nil
+	return resp, nil
 }
 
 // ListAttestedNodes lists all attested nodes (pagination available)
@@ -986,13 +987,44 @@ func fetchAttestedNode(tx *gorm.DB, spiffeID string) (*common.AttestedNode, erro
 	return modelToAttestedNode(model), nil
 }
 
-func countAttestedNodes(tx *gorm.DB) (int32, error) {
+func countAttestedNodes(tx *gorm.DB) (*agentv1.CountAgentsResponse, error) {
 	var count int
 	if err := tx.Model(&AttestedNode{}).Count(&count).Error; err != nil {
-		return 0, sqlError.Wrap(err)
+		return nil, sqlError.Wrap(err)
 	}
 
-	return int32(count), nil
+	rows, err := tx.Model(&AttestedNode{}).Select("version, count(1) as count").Group("version").Order("version desc").Rows()
+	if err != nil {
+		return nil, sqlError.Wrap(err)
+	}
+	defer rows.Close()
+
+	var details []*agentv1.CountDetail
+	pushCountDetail := func(d *agentv1.CountDetail) {
+		if d != nil {
+			details = append(details, d)
+		}
+	}
+
+	for rows.Next() {
+		var r countDetailRow
+		if err := scanCountDetailRow(rows, &r); err != nil {
+			return nil, err
+		}
+
+		detail := new(agentv1.CountDetail)
+		fillCountDetailFromRow(detail, &r)
+		pushCountDetail(detail)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, sqlError.Wrap(err)
+	}
+
+	return &agentv1.CountAgentsResponse{
+		Count:        int32(count),
+		CountDetails: details,
+	}, nil
 }
 
 func listAttestedNodes(ctx context.Context, db *sqlDB, log logrus.FieldLogger, req *datastore.ListAttestedNodesRequest) (*datastore.ListAttestedNodesResponse, error) {
@@ -2955,6 +2987,28 @@ func fillEntryFromRow(entry *common.RegistrationEntry, r *entryRow) error {
 		entry.FederatesWith = append(entry.FederatesWith, r.TrustDomain.String)
 	}
 	return nil
+}
+
+type countDetailRow struct {
+	Version sql.NullString
+	Count   sql.NullInt64
+}
+
+func scanCountDetailRow(rs *sql.Rows, r *countDetailRow) error {
+	return sqlError.Wrap(rs.Scan(
+		&r.Version,
+		&r.Count,
+	))
+}
+
+func fillCountDetailFromRow(countDetail *agentv1.CountDetail, r *countDetailRow) {
+	if r.Version.Valid {
+		countDetail.Version = r.Version.String
+	}
+
+	if r.Count.Valid {
+		countDetail.Count = int32(r.Count.Int64)
+	}
 }
 
 // applyPagination  add order limit and token to current query

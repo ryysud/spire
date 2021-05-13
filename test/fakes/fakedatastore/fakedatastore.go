@@ -11,6 +11,7 @@ import (
 	"github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/require"
 
+	agentv1 "github.com/spiffe/spire-api-sdk/proto/spire/api/server/agent/v1"
 	"github.com/spiffe/spire/pkg/common/util"
 	"github.com/spiffe/spire/pkg/server/plugin/datastore"
 	"github.com/spiffe/spire/pkg/server/plugin/datastore/sql"
@@ -115,9 +116,9 @@ func (s *DataStore) PruneBundle(ctx context.Context, trustDomainID string, expir
 	return s.ds.PruneBundle(ctx, trustDomainID, expiresBefore)
 }
 
-func (s *DataStore) CountAttestedNodes(ctx context.Context) (int32, error) {
+func (s *DataStore) CountAttestedNodes(ctx context.Context) (*agentv1.CountAgentsResponse, error) {
 	if err := s.getNextError(); err != nil {
-		return 0, err
+		return nil, err
 	}
 	return s.ds.CountAttestedNodes(ctx)
 }

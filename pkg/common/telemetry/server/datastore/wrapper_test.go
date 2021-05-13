@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	agentv1 "github.com/spiffe/spire-api-sdk/proto/spire/api/server/agent/v1"
 	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/spiffe/spire/pkg/server/plugin/datastore"
 	"github.com/spiffe/spire/proto/spire/common"
@@ -235,8 +236,8 @@ func (ds *fakeDataStore) AppendBundle(context.Context, *common.Bundle) (*common.
 	return &common.Bundle{}, ds.err
 }
 
-func (ds *fakeDataStore) CountAttestedNodes(context.Context) (int32, error) {
-	return 0, ds.err
+func (ds *fakeDataStore) CountAttestedNodes(context.Context) (*agentv1.CountAgentsResponse, error) {
+	return &agentv1.CountAgentsResponse{}, ds.err
 }
 
 func (ds *fakeDataStore) CountBundles(context.Context) (int32, error) {

@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	agentv1 "github.com/spiffe/spire-api-sdk/proto/spire/api/server/agent/v1"
 	"github.com/spiffe/spire/pkg/common/telemetry"
 	"github.com/spiffe/spire/pkg/server/plugin/datastore"
 	"github.com/spiffe/spire/proto/spire/common"
@@ -129,7 +130,7 @@ func (w metricsWrapper) ListRegistrationEntries(ctx context.Context, req *datast
 	return w.ds.ListRegistrationEntries(ctx, req)
 }
 
-func (w metricsWrapper) CountAttestedNodes(ctx context.Context) (_ int32, err error) {
+func (w metricsWrapper) CountAttestedNodes(ctx context.Context) (_ *agentv1.CountAgentsResponse, err error) {
 	callCounter := StartCountNodeCall(w.m)
 	defer callCounter.Done(&err)
 	return w.ds.CountAttestedNodes(ctx)

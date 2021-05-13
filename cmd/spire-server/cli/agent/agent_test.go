@@ -20,7 +20,7 @@ import (
 )
 
 var (
-	testAgents              = []*types.Agent{{Id: &types.SPIFFEID{TrustDomain: "example.org", Path: "/spire/agent/agent1"}}}
+	testAgents              = []*types.Agent{{Id: &types.SPIFFEID{TrustDomain: "example.org", Path: "/spire/agent/agent1"}, Version: "1.0.0"}}
 	testAgentsWithSelectors = []*types.Agent{
 		{
 			Id: &types.SPIFFEID{TrustDomain: "example.org", Path: "/spire/agent/agent2"},
@@ -138,13 +138,17 @@ func TestCount(t *testing.T) {
 		{
 			name:               "0 agents",
 			expectedReturnCode: 0,
-			expectedStdout:     "0 attested agents",
+			expectedStdout:     "Total : 0 attested agents\n",
 		},
 		{
-			name:               "count 1 agent",
+			name:               "count 3 agent",
 			expectedReturnCode: 0,
-			expectedStdout:     "1 attested agent",
-			existentAgents:     testAgents,
+			expectedStdout:     "Total : 3 attested agents\n\nv1.1.0 : 2 attested agents\nv1.0.0 : 1 attested agent\n",
+			existentAgents: []*types.Agent{
+				{Id: &types.SPIFFEID{TrustDomain: "example.org", Path: "/spire/agent/agent1"}, Version: "1.1.0"},
+				{Id: &types.SPIFFEID{TrustDomain: "example.org", Path: "/spire/agent/agent2"}, Version: "1.1.0"},
+				{Id: &types.SPIFFEID{TrustDomain: "example.org", Path: "/spire/agent/agent3"}, Version: "1.0.0"},
+			},
 		},
 		{
 			name:               "server error",
@@ -165,7 +169,7 @@ func TestCount(t *testing.T) {
 			test.server.agents = tt.existentAgents
 			test.server.err = tt.serverErr
 			returnCode := test.client.Run(append(test.args, tt.args...))
-			require.Contains(t, test.stdout.String(), tt.expectedStdout)
+			require.Equal(t, tt.expectedStdout, test.stdout.String())
 			require.Equal(t, tt.expectedStderr, test.stderr.String())
 			require.Equal(t, tt.expectedReturnCode, returnCode)
 		})
@@ -347,8 +351,28 @@ func (s *fakeAgentServer) DeleteAgent(ctx context.Context, req *agentv1.DeleteAg
 }
 
 func (s *fakeAgentServer) CountAgents(ctx context.Context, req *agentv1.CountAgentsRequest) (*agentv1.CountAgentsResponse, error) {
+	var details []*agentv1.CountDetail
+
+	for _, a := range s.agents {
+		appended := false
+		for _, d := range details {
+			if d.Version == a.Version {
+				appended = true
+				d.Count++
+				break
+			}
+		}
+		if !appended {
+			details = append(details, &agentv1.CountDetail{
+				Version: a.Version,
+				Count:   1,
+			})
+		}
+	}
+
 	return &agentv1.CountAgentsResponse{
-		Count: int32(len(s.agents)),
+		Count:        int32(len(s.agents)),
+		CountDetails: details,
 	}, s.err
 }
 

@@ -86,4 +86,4 @@ require (
 )
 
 // TODO: remove this
-replace github.com/spiffe/spire-api-sdk => github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210512024438-7789667ffc25
+replace github.com/spiffe/spire-api-sdk => github.com/ryysud/spire-api-sdk v1.0.0-pre.0.20210513070629-9f48cba0ec40

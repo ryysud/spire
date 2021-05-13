@@ -101,7 +101,7 @@ func (s *Service) GetInfo(ctx context.Context, req *debugv1.GetInfoRequest) (*de
 		// Reset clock and set current response
 		s.getInfoResp.ts = s.clock.Now()
 		s.getInfoResp.resp = &debugv1.GetInfoResponse{
-			AgentsCount:           nodes,
+			AgentsCount:           nodes.Count,
 			EntriesCount:          entries,
 			FederatedBundlesCount: bundles,
 			SvidChain:             svidChain,

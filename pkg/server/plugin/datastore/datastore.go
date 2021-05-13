@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	agentv1 "github.com/spiffe/spire-api-sdk/proto/spire/api/server/agent/v1"
 	"github.com/spiffe/spire/proto/spire/common"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
@@ -32,7 +33,7 @@ type DataStore interface {
 	UpdateRegistrationEntry(context.Context, *common.RegistrationEntry, *common.RegistrationEntryMask) (*common.RegistrationEntry, error)
 
 	// Nodes
-	CountAttestedNodes(context.Context) (int32, error)
+	CountAttestedNodes(context.Context) (*agentv1.CountAgentsResponse, error)
 	CreateAttestedNode(context.Context, *common.AttestedNode) (*common.AttestedNode, error)
 	DeleteAttestedNode(ctx context.Context, spiffeID string) (*common.AttestedNode, error)
 	FetchAttestedNode(ctx context.Context, spiffeID string) (*common.AttestedNode, error)

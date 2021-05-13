@@ -70,13 +70,13 @@ func RegisterService(s *grpc.Server, service *Service) {
 
 // CountAgents returns the total number of agents.
 func (s *Service) CountAgents(ctx context.Context, req *agentv1.CountAgentsRequest) (*agentv1.CountAgentsResponse, error) {
-	count, err := s.ds.CountAttestedNodes(ctx)
+	resp, err := s.ds.CountAttestedNodes(ctx)
 	if err != nil {
 		log := rpccontext.Logger(ctx)
 		return nil, api.MakeErr(log, codes.Internal, "failed to count agents", err)
 	}
 
-	return &agentv1.CountAgentsResponse{Count: count}, nil
+	return resp, nil
 }
 
 // ListAgents returns an optionally filtered and/or paginated list of agents.

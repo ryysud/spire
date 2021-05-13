@@ -124,6 +124,7 @@ func TestCountAgents(t *testing.T) {
 	for _, tt := range []struct {
 		name       string
 		count      int32
+		versions   []string
 		resp       *agentv1.CountAgentsResponse
 		code       codes.Code
 		dsError    error
@@ -133,22 +134,59 @@ func TestCountAgents(t *testing.T) {
 		{
 			name:  "0 nodes",
 			count: 0,
-			resp:  &agentv1.CountAgentsResponse{Count: 0},
+			resp: &agentv1.CountAgentsResponse{
+				Count: 0,
+			},
 		},
 		{
-			name:  "1 node",
-			count: 1,
-			resp:  &agentv1.CountAgentsResponse{Count: 1},
+			name:     "1 node",
+			count:    1,
+			versions: []string{"1.1.0"},
+			resp: &agentv1.CountAgentsResponse{
+				Count: 1,
+				CountDetails: []*agentv1.CountDetail{
+					{
+						Version: "1.1.0",
+						Count:   1,
+					},
+				},
+			},
 		},
 		{
-			name:  "2 nodes",
-			count: 2,
-			resp:  &agentv1.CountAgentsResponse{Count: 2},
+			name:     "2 nodes",
+			count:    2,
+			versions: []string{"1.1.0", "1.0.0"},
+			resp: &agentv1.CountAgentsResponse{
+				Count: 2,
+				CountDetails: []*agentv1.CountDetail{
+					{
+						Version: "1.1.0",
+						Count:   1,
+					},
+					{
+						Version: "1.0.0",
+						Count:   1,
+					},
+				},
+			},
 		},
 		{
-			name:  "3 nodes",
-			count: 3,
-			resp:  &agentv1.CountAgentsResponse{Count: 3},
+			name:     "3 nodes",
+			count:    3,
+			versions: []string{"1.1.0", "1.1.0", "1.0.0"},
+			resp: &agentv1.CountAgentsResponse{
+				Count: 3,
+				CountDetails: []*agentv1.CountDetail{
+					{
+						Version: "1.1.0",
+						Count:   2,
+					},
+					{
+						Version: "1.0.0",
+						Count:   1,
+					},
+				},
+			},
 		},
 		{
 			name:    "ds error",
@@ -184,6 +222,7 @@ func TestCountAgents(t *testing.T) {
 						{Type: "a", Value: "1"},
 						{Type: "b", Value: "2"},
 					},
+					Version: tt.versions[i],
 				})
 				require.NoError(t, err)
 			}

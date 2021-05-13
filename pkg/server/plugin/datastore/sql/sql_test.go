@@ -468,9 +468,10 @@ func (s *PluginSuite) TestCountBundles() {
 
 func (s *PluginSuite) TestCountAttestedNodes() {
 	// Count empty attested nodes
-	count, err := s.ds.CountAttestedNodes(ctx)
+	resp, err := s.ds.CountAttestedNodes(ctx)
 	s.Require().NoError(err)
-	s.Require().Equal(int32(0), count)
+	s.Require().Equal(int32(0), resp.Count)
+	s.Require().Nil(resp.CountDetails)
 
 	// Create attested nodes
 	node := &common.AttestedNode{
@@ -478,6 +479,7 @@ func (s *PluginSuite) TestCountAttestedNodes() {
 		AttestationDataType: "t1",
 		CertSerialNumber:    "1234",
 		CertNotAfter:        time.Now().Add(time.Hour).Unix(),
+		Version:             "1.1.0",
 	}
 	_, err = s.ds.CreateAttestedNode(ctx, node)
 	s.Require().NoError(err)
@@ -487,14 +489,29 @@ func (s *PluginSuite) TestCountAttestedNodes() {
 		AttestationDataType: "t2",
 		CertSerialNumber:    "5678",
 		CertNotAfter:        time.Now().Add(time.Hour).Unix(),
+		Version:             "1.1.0",
 	}
 	_, err = s.ds.CreateAttestedNode(ctx, node2)
 	s.Require().NoError(err)
 
-	// Count all
-	count, err = s.ds.CountAttestedNodes(ctx)
+	node3 := &common.AttestedNode{
+		SpiffeId:            "spiffe://example.org/baz",
+		AttestationDataType: "t3",
+		CertSerialNumber:    "9012",
+		CertNotAfter:        time.Now().Add(time.Hour).Unix(),
+		Version:             "1.0.0",
+	}
+	_, err = s.ds.CreateAttestedNode(ctx, node3)
 	s.Require().NoError(err)
-	s.Require().Equal(int32(2), count)
+
+	// Count all
+	resp, err = s.ds.CountAttestedNodes(ctx)
+	s.Require().NoError(err)
+	s.Require().Equal(int32(3), resp.Count)
+	s.Require().Equal("1.1.0", resp.CountDetails[0].Version)
+	s.Require().Equal(int32(2), resp.CountDetails[0].Count)
+	s.Require().Equal("1.0.0", resp.CountDetails[1].Version)
+	s.Require().Equal(int32(1), resp.CountDetails[1].Count)
 }
 
 func (s *PluginSuite) TestCountRegistrationEntries() {
